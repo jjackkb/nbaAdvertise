@@ -1,5 +1,4 @@
-{
-	"teams": [
+[
 		{"name":"Celtics", "arena":"TD Gardens", "location":"Boston","coast":"east","capacity":18624,"championships":17},
 		{"name":"Nets", "arena":"Barclays Center", "location":"New York City","coast":"east","capacity":17732,"championships":0},
 		{"name":"Knicks", "arena":"Madison Square Garden", "location":"New York City","coast":"east","capacity":19812,"championships":2},
@@ -31,4 +30,3 @@
         {"name":"Pelicans", "arena":"Smoothie King Center", "location":"New Orleans","coast":"east","capacity":16867,"championships":0},
         {"name":"Spurs", "arena":"AT&T Center", "location":"San Antonio","coast":"east","capacity":18418,"championships":5}
 	]
-}

@@ -1,15 +1,28 @@
 import java.io.FileReader;
+import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Main {
-    public static void main(String[] args) {
-        int[] caps;
+    public static void main(String[] args) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
 
-        business b1 = new business("west", 1900, 3);
-        Object o = new JSONParser().parse(new FileReader(data.json));
-        JSONObject j = (JSONObject) o;
+        JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir")+"/data.json"));
 
-        if (j.get(“coast”) >= b1.getSection()){
-            caps[] += j.get("capacities");
+        for (Object o : a)
+        {
+            JSONObject person = (JSONObject) o;
+
+            String name = (String) person.get("name");
+            String arena = (String) person.get("arena");
+            String location = (String) person.get("location");
+            String coast = (String) person.get("coast");
+            //to get ints from json it has to be this command as a long data type
+            long capacity = (Long) person.get("capacity");
+            long champs = (Long) person.get("championships");
+            System.out.println("Name: "+name+", "+"Arena: "+arena+", "+"Location: "+location+", "+"Coast: "+coast+", "+"Capacity: "+capacity+", "+"Championships: "+champs);
         }
     }
 }
