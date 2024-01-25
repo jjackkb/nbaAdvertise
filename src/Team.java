@@ -8,6 +8,7 @@ public class Team extends Main {
     private final String conference;
     private final int capacity;
     private final int champs;
+    private int rank;
 
     public Team(String name, String arena, String location, String conference, int capacity, int champs) {
         this.name = name;
@@ -39,8 +40,16 @@ public class Team extends Main {
     public int getChamps() {
         return champs;
     }
+    public int getRank() {
+        return rank;
+    }
     public static ArrayList<Team> getTeams() {
         return teams;
+    }
+
+    //Mutator method
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     //toString method

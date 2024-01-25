@@ -1,5 +1,9 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -7,8 +11,13 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
+        instantiate();
+        displayTeams();
+    }
+
+    private static void instantiate() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir")+"/data.json"));
+        JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
 
         //Instantiate every team object with given data
         for (Object o : a) {
@@ -23,11 +32,27 @@ public class Main {
 
             new Team(name, arena, location, conference, (int) capacity, (int) champs);
         }
+    }
 
-        //Print out every Team in teams arrayList
+    private static void displayTeams() {
         System.out.println("| Name | Arena | Location | Conference | Capacity | Championships |");
         for (Team t : Team.getTeams()) {
             System.out.println(t.toString());
         }
+    }
+
+    private static ArrayList<Team> rankTeams() {
+        ArrayList<Team> rankedTeams = new ArrayList<>();
+
+        for (Team t : Team.getTeams()) {
+            int tScore = t.getChamps() * t.getCapacity();
+            for (Team t2 : rankedTeams) {
+                int t2Score = t.getChamps() * t.getCapacity();
+                if (tScore > t2Score) {
+
+                }
+            }
+        }
+        return rankedTeams;
     }
 }
