@@ -18,14 +18,13 @@ public class Main {
             String arena = (String) person.get("arena");
             String location = (String) person.get("location");
             String conference = (String) person.get("conference");
-            //to get int from json it has to be this command as a long data type
-            long capacity = (Long) person.get("capacity");
+            long capacity = (Long) person.get("capacity"); //to get int from json it has to be this command as a long data type
             long champs = (Long) person.get("championships");
 
             new Team(name, arena, location, conference, (int) capacity, (int) champs);
         }
 
-        //Print out teams
+        //Print out every Team in teams arrayList
         System.out.println("| Name | Arena | Location | Conference | Capacity | Championships |");
         for (Team t : Team.getTeams()) {
             System.out.println(t.toString());
