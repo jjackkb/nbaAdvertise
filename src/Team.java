@@ -46,6 +46,18 @@ public class Team extends Main {
     public static ArrayList<Team> getTeams() {
         return teams;
     }
+    public static String getTeamsStr() {
+        StringBuilder teamsStr = new StringBuilder();
+
+        teamsStr.append("Name | Arena | Location | Conference | Capacity | Championships\n");
+        for (Team t : Team.getTeams()) {
+            teamsStr.append(t.toString()).append("\n");
+        }
+
+        teamsStr.delete(teamsStr.length()-1,teamsStr.length());
+
+        return teamsStr.toString();
+    }
 
     //Mutator method
     public void setRank(int rank) {
