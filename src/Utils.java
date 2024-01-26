@@ -1,5 +1,7 @@
 //Utils class contains misc and general-use methods
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Utils extends Main {
     private static final Scanner sc = new Scanner(System.in);
@@ -35,6 +37,16 @@ public class Utils extends Main {
         }
 
         return output;
+    }
+  
+    public static ArrayList<Team> teamRankSort(ArrayList<Team> arrT) {
+        arrT.sort(Comparator.comparingInt(o -> ((o.getChamps() + 1) * o.getCapacity())));
+
+        for (int x = 30; x >= 1; x--) {
+            arrT.get(x-1).setRank(31-x);
+        }
+
+        return arrT;
     }
 
     //set method for changing a components weight in the algorithm

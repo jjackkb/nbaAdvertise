@@ -8,6 +8,15 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
+        instantiate();
+
+        for (Team t : Utils.teamRankSort(Team.getTeams())) {
+            System.out.println(t.toString());
+        }
+        //displayTeams();
+    }
+
+    private static void instantiate() throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
 
@@ -24,6 +33,7 @@ public class Main {
 
             new Team(name, arena, location, conference, (int) capacity, (int) champs);
         }
+    }
 
         //input/output repeats forever
         //noinspection InfiniteLoopStatement
