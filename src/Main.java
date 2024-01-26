@@ -1,14 +1,15 @@
-import java.io.FileReader;
-import java.io.IOException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
+import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir")+"/data.json"));
+        JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
 
         //Instantiate every team object with given data
         for (Object o : a) {
@@ -18,23 +19,19 @@ public class Main {
             String arena = (String) person.get("arena");
             String location = (String) person.get("location");
             String conference = (String) person.get("conference");
-            long capacity = (Long) person.get("capacity"); //to get int from json it has to be this command as a long data type
+            long capacity = (Long) person.get("capacity"); //to get int from json it has to be the long datatype
             long champs = (Long) person.get("championships");
 
             new Team(name, arena, location, conference, (int) capacity, (int) champs);
         }
 
-        //Print out every Team in teams arrayList
-        System.out.println("| Name | Arena | Location | Conference | Capacity | Championships |");
-        for (Team t : Team.getTeams()) {
-            System.out.println(t.toString());
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            dspIntrface();
         }
-   
-	while (true) {
-		for (int x = 0; x < 14; x++) {
-			System.out.println();
-		}
-		Utils.interface();
-	}
+    }
+
+    private static void dspIntrface() {
+        System.out.println(Utils.intrfaceInput());
     }
 }

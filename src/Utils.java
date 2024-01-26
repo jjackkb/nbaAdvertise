@@ -1,12 +1,22 @@
 import java.util.Scanner;
 
-public class Utils {
-	Scanner sc = new Scanner(System.in);
-	String input = "";
+public class Utils extends Main {
+	private static final Scanner sc = new Scanner(System.in);
 
-	public void interface() {
-		System.out.print(":");
-		input = sc.nextLine();
-		System.out.println(input);
-	}
+    public static String intrfaceInput() {
+        String output;
+
+        System.out.print("~ ");
+        output = switch (sc.nextLine()) {
+            case "ranked" -> Team.getTeamsStr();
+            case "test" -> "Test Complete!";
+            default -> "Incorrect Command!";
+        };
+
+        for (int x = 0; x < 14; x++) {
+            System.out.println();
+        }
+
+        return output;
+    }
 }
