@@ -29,5 +29,12 @@ public class Main {
         for (Team t : Team.getTeams()) {
             System.out.println(t.toString());
         }
+   
+	while (true) {
+		for (int x = 0; x < 14; x++) {
+			System.out.println();
+		}
+		Utils.interface();
+	}
     }
 }
