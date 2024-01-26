@@ -1,9 +1,5 @@
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -12,7 +8,11 @@ import org.json.simple.parser.ParseException;
 public class Main {
     public static void main(String[] args) throws IOException, ParseException {
         instantiate();
-        displayTeams();
+
+        for (Team t : Utils.teamRankSort(Team.getTeams())) {
+            System.out.println(t.toString());
+        }
+        //displayTeams();
     }
 
     private static void instantiate() throws IOException, ParseException {
@@ -35,24 +35,9 @@ public class Main {
     }
 
     private static void displayTeams() {
-        System.out.println("| Name | Arena | Location | Conference | Capacity | Championships |");
+        System.out.println("| Rank | Name | Arena | Location | Conference | Capacity | Championships |");
         for (Team t : Team.getTeams()) {
             System.out.println(t.toString());
         }
-    }
-
-    private static ArrayList<Team> rankTeams() {
-        ArrayList<Team> rankedTeams = new ArrayList<>();
-
-        for (Team t : Team.getTeams()) {
-            int tScore = t.getChamps() * t.getCapacity();
-            for (Team t2 : rankedTeams) {
-                int t2Score = t.getChamps() * t.getCapacity();
-                if (tScore > t2Score) {
-
-                }
-            }
-        }
-        return rankedTeams;
     }
 }

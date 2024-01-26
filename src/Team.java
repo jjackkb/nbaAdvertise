@@ -54,6 +54,6 @@ public class Team extends Main {
 
     //toString method
     public String toString() {
-        return name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs;
+        return rank+" | "+name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs;
     }
 }
