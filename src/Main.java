@@ -25,12 +25,15 @@ public class Main {
             new Team(name, arena, location, conference, (int) capacity, (int) champs);
         }
 
+        //input/output repeats forever
         //noinspection InfiniteLoopStatement
         while (true) {
             dspIntrface();
         }
     }
 
+    //this method is what is run in the while loop to prompt for input repeatedly
+    //the Utils.intrfaceInput is executed, prompts for input, runs respective method and returns String output
     private static void dspIntrface() {
         System.out.println(Utils.intrfaceInput());
     }
