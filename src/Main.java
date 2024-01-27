@@ -10,10 +10,11 @@ public class Main {
     public static void main(String[] args) throws IOException, ParseException {
         instantiate();
 
-        for (Team t : Utils.teamRankSort(Team.getTeams())) {
-            System.out.println(t.toString());
+        //input/output repeats forever
+        //noinspection InfiniteLoopStatement
+        while (true) {
+            dspIntrface();
         }
-        //displayTeams();
     }
 
     private static void instantiate() throws IOException, ParseException {
@@ -35,16 +36,9 @@ public class Main {
         }
     }
 
-        //input/output repeats forever
-        //noinspection InfiniteLoopStatement
-        while (true) {
-            dspIntrface();
-        }
-    }
-
     //this method is what is run in the while loop to prompt for input repeatedly
     //the Utils.intrfaceInput is executed, prompts for input, runs respective method and returns String output
     private static void dspIntrface() {
         System.out.println(Utils.intrfaceInput());
     }
-}
+    }

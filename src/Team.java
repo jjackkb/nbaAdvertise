@@ -1,7 +1,8 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Team extends Main {
-    private static final ArrayList<Team> teams = new ArrayList<>();
+    private static final List<Team> teams = new ArrayList<>();
     private final String name;
     private final String arena;
     private final String location;
@@ -9,6 +10,7 @@ public class Team extends Main {
     private final int capacity;
     private final int champs;
     private int rank;
+    private double score;
 
     public Team(String name, String arena, String location, String conference, int capacity, int champs) {
         this.name = name;
@@ -43,29 +45,33 @@ public class Team extends Main {
     public int getRank() {
         return rank;
     }
-    public static ArrayList<Team> getTeams() {
+    public double getScore() {
+        return score;
+    }
+    public static List<Team> getTeams() {
         return teams;
     }
     public static String getTeamsStr() {
         StringBuilder teamsStr = new StringBuilder();
 
-        teamsStr.append("Name | Arena | Location | Conference | Capacity | Championships\n");
-        for (Team t : Team.getTeams()) {
+        for (Team t : Utils.teamRankSort(Team.getTeams())) {
             teamsStr.append(t.toString()).append("\n");
         }
-
-        teamsStr.delete(teamsStr.length()-1,teamsStr.length());
+        teamsStr.append("Rank | Name | Arena | Location | Conference | Capacity | Championships | Score");
 
         return teamsStr.toString();
     }
 
     //Mutator method
+    public void setScore(double newScore) {
+        this.score = newScore;
+    }
     public void setRank(int rank) {
         this.rank = rank;
     }
 
     //toString method
     public String toString() {
-        return rank+" | "+name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs;
+        return rank+" | "+name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs+" | "+score;
     }
 }
