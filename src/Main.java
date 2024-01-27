@@ -7,13 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) throws IOException, ParseException {
         instantiate();
 
         //input/output repeats forever
         //noinspection InfiniteLoopStatement
         while (true) {
-            dspIntrface();
+            System.out.println(Utils.intrfaceInput());
         }
     }
 
@@ -21,7 +22,7 @@ public class Main {
         JSONParser parser = new JSONParser();
         JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
 
-        //Instantiate every team object with given data
+        //Instantiate every Team object with given data
         for (Object o : a) {
             JSONObject person = (JSONObject) o;
 
@@ -31,14 +32,9 @@ public class Main {
             String conference = (String) person.get("conference");
             long capacity = (Long) person.get("capacity"); //to get int from json it has to be the long datatype
             long champs = (Long) person.get("championships");
+            long avg = (Long) person.get("avgAttendance");
 
-            new Team(name, arena, location, conference, (int) capacity, (int) champs);
+            new Team(name, arena, location, conference, (int) capacity, (int) champs, (int) avg);
         }
     }
-
-    //this method is what is run in the while loop to prompt for input repeatedly
-    //the Utils.intrfaceInput is executed, prompts for input, runs respective method and returns String output
-    private static void dspIntrface() {
-        System.out.println(Utils.intrfaceInput());
-    }
-    }
+}
