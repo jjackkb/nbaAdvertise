@@ -5,9 +5,14 @@ public class Utils extends Main {
 
     private static final Scanner sc = new Scanner(System.in);
     //arena capacity weight, championship win weight and average attendance weight, respectively
-    private static double Wac = 0.1;
-    private static double Wcw = 0.4;
-    private static double Waa = 0.5;
+    public static ArrayList<Double> weights = new ArrayList<>();
+    public static Double Wac = 0.1;
+    public static Double Wcw = 0.4;
+    public static Double Waa = 0.5;
+
+    private static String getInput() {
+        return sc.nextLine();
+    }
 
     //user input prompt and command processing
     public static String intrfaceInput() {
@@ -16,7 +21,7 @@ public class Utils extends Main {
         String[] cmd = new String[4];
 
         System.out.print("~ "); //inline input
-        String cmdArgs = (sc.nextLine());
+        String cmdArgs = getInput();
 
         //Assign given command arguments to cmd String array
         for (String s : cmdArgs.split(" ")) {
@@ -79,6 +84,30 @@ public class Utils extends Main {
         return ta;
     }
 
+    private static Double defineWeight() {
+        String s = getInput();
+
+        s = (s.isEmpty()) ? "-1" : s;
+        return Double.parseDouble(s)/100;
+    }
+
+    private static double weightTotal() {
+        weights.clear();
+        weights.add(Wac);
+        weights.add(Wcw);
+        weights.add(Waa);
+
+        double total = 0;
+
+        for (Double d : weights) {
+            if (d >= 0) {
+                total += d;
+            }
+        }
+
+        return total;
+    }
+
     private static String setAll() {
         double oldWac = Wac;
         double oldWcw = Wcw;
@@ -89,18 +118,26 @@ public class Utils extends Main {
         for (int x = 0; x < 3; x++) {
             if (x == 0) {
                 System.out.print("-- Capacity (Wac) = ");
-                Wac = (double) Integer.parseInt(sc.nextLine()) /100;
+                Wac = defineWeight();
             }
             if (x == 1) {
                 System.out.print("-- Championship Win (Wcw) = ");
-                Wcw = (double) Integer.parseInt(sc.nextLine()) /100;
+                Wcw = defineWeight();
             }
             if (x == 2) {
                 System.out.print("-- Average Attendance (Waa) = ");
-                Waa = (double) Integer.parseInt(sc.nextLine()) /100;
-
+                Waa = defineWeight();
             }
         }
+
+        /*
+        NOTE
+        Only works with one not given value
+        Two makes it crash
+         */
+        Wac = (Wac == -0.01) ? (1-weightTotal()) : Wac;
+        Wcw = (Wcw == -0.01) ? (1-weightTotal()) : Wcw;
+        Waa = (Waa == -0.01) ? (1-weightTotal()) : Waa;
 
         if (Wac+Wcw+Waa != 1) {
             Wac = oldWac;
@@ -109,32 +146,33 @@ public class Utils extends Main {
 
             return "ctl: Error: values do not have a sum of 100! Changes reverted!";
         }
+
         return "ctl: Settings saved";
     }
 
     //set method for changing a components weight in the algorithm
     //usage 'set <setting> <value>'
     private static String set(String setting, String strVal) {
-        if (setting.equals("default")) {
-            Wac = 0.1;
-            Wcw = 0.4;
-            Waa = 0.5;
-            return "Settings reverted to default";
-        }
-
         try { //requires a try-catch wrap in case unable to assign int value to newVal
+            strVal = (strVal == null) ? "" : strVal;
+            if (setting.equals("default")) {
+                Wac = 0.1;
+                Wcw = 0.4;
+                Waa = 0.5;
+                return "Settings reverted to default";
+            }
 
                 switch (setting.toLowerCase()) {
                     case "all", "a":
                         return setAll();
                     case "capacity", "ac":
-                        Wac = Integer.parseInt(strVal);
+                        Wac = Double.parseDouble(strVal);
                         break;
                     case "championship", "cw":
-                        Wcw = Integer.parseInt(strVal);
+                        Wcw = Double.parseDouble(strVal);
                         break;
                     case "attendance", "aa":
-                        Waa = Integer.parseInt(strVal);
+                        Waa = Double.parseDouble(strVal);
                         break;
                     default:
                         return "Setting " + setting + " not found!";
