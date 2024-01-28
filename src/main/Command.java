@@ -25,7 +25,7 @@ public class Command {
         
         output = switch(args[0]) {
             case "ctl" -> ctl.ctlProcess(args[1], args[2], args[3]);
-            case "team" -> tm.teamProcess(args[1], args[2], args[3]);
+            case "tm" -> tm.teamProcess(args[1], args[2], args[3]);
             default -> "Invalid command!";
         };
         return output;
@@ -127,7 +127,7 @@ class tm extends Command {
     protected static String teamProcess(String cmd, String arg1, String arg2) {
         return switch(cmd) {
             case "", "list" -> teamListDisplay();
-            default -> "team: Error: unexpected argument " + cmd;
+            default -> "tm: Error: unexpected argument " + cmd;
         };
     }
 
@@ -137,7 +137,7 @@ class tm extends Command {
         for (Team t : Rank.sort()) {
             teamsStr.append(t.toString()).append("\n");
         }
-        teamsStr.append("main.Rank | Name | Score | Arena | Location | Conference | Capacity | Championships | Avg Attendance");
+        teamsStr.append("Rank | Name | Arena | Location | Conference | Capacity | Championships | Avg Attendance");
         return teamsStr.toString();
     }
 }

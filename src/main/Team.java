@@ -62,6 +62,6 @@ public class Team {
     public String toString() {
         DecimalFormat numFormat = new DecimalFormat("#.00");
 
-        return rank.getRankVal()+" | "+name+" | "+numFormat.format(rank.getScore())+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs+" | "+avgAtt;
+        return rank.getRankVal()+" | "+name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs+" | "+avgAtt;
     }
 }
