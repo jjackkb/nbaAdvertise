@@ -23,12 +23,13 @@ public class Rank extends Team {
 
     private static void calcScore() {
         for (Team t : Team.getTeams()) {
-            double cw = t.getChamps() + 1; //add one to protect against bug caused by team w/ 0 championships
-            double ac = t.getCapacity();
-            double aa = t.getAvgAtt();
+            double ac = normalise(t.getCapacity(), 1);
+            double cw = normalise((t.getChamps()+1), 2); //add one to protect against bug caused by team w/ 0 championships
+            double aa = normalise(t.getAvgAtt(), 3);
+            double at = normalise(t.getTicket(), 4);
 
             /* ALGORITHM
-            FS = Wac * ac + Wcw * cw + Waa * aa
+            FS = Wac * ac + Wcw * cw + Waa * aa + Wat * at
 
             where:
             FS: final score for team
@@ -38,8 +39,17 @@ public class Rank extends Team {
             wAC, wCW, and wAA are the weights assigned respectively
              */
 
-            t.setScore((Wac.getWeight() * ac) + (Wcw.getWeight() * cw) + (Waa.getWeight() * aa));
+            t.setScore((Wac.getWeight() * ac) + (Wcw.getWeight() * cw) + (Waa.getWeight() * aa) + (Wat.getWeight() * at));
         }
+    }
+    private static double normalise(double i, int t) {
+       return switch(t) {
+           case 1 -> (i-17923)/(21600-17923);
+           case 2 -> (i-0)/(17);
+           case 3 -> (i-16306)/(20177-16304);
+           case 4 -> (i-138)/(611-138);
+           default -> 0;
+       };
     }
     private static void calcRank() {
        int x = 30;

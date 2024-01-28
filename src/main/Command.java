@@ -38,11 +38,12 @@ class ctl extends Command {
     private static final Weight Wac = Main.Wac;
     private static final Weight Wcw = Main.Wcw;
     private static final Weight Waa = Main.Waa;
+    private static final Weight Wat = Main.Wat;
 
     protected static String ctlProcess(String cmd, String arg1, String arg2) {
         return switch(cmd) {
             case "set" -> switch(arg1) {
-                case "a", "all" -> setAll();
+                case "", "a", "all" -> setAll();
                 default -> set(arg1, arg2);
             };
             case "", "settings" -> displaySetting();
@@ -56,9 +57,10 @@ class ctl extends Command {
         try { //requires a try-catch wrap in case unable to assign int value to newVal
             strVal = (strVal == null) ? "" : strVal;
             if (setting.equals("default")) {
-                Wac.setWeight(0.1);
-                Wcw.setWeight(0.4);
-                Waa.setWeight(0.5);
+                Wac.setWeight(0.05);
+                Wcw.setWeight(0.2);
+                Waa.setWeight(0.25);
+                Wat.setWeight(0.3);
                 return "ctl: Settings reverted to default";
             }
 
@@ -72,18 +74,22 @@ class ctl extends Command {
                 case "attendance", "aa":
                     Waa.setWeight(Double.parseDouble(strVal)/100);
                     break;
+                case "ticket", "at":
+                    Wat.setWeight(Double.parseDouble(strVal)/100);
+                    break;
                 default:
                     return "ctl: Error: Setting " + setting + " not found!";
             }
         }
         catch(Exception e) { return "ctl: Error: while attempting to change setting!"; }
-        return String.format("New Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent()).replace("%%", "%");
+        return String.format("New Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%\n  Ticket: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent(), Wat.getPercent()).replace("%%", "%");
     }
 
     private static String setAll() {
         double oldWac = Wac.getWeight();
         double oldWcw = Wcw.getWeight();
         double oldWaa = Waa.getWeight();
+        double oldWat = Wat.getWeight();
 
         System.out.println("Algorithm Weight Percentage Setter\nAll values must have a sum of 100\nLeave blank to skip specification");
 
@@ -96,12 +102,16 @@ class ctl extends Command {
         System.out.print("-- Average Attendance (Waa) = ");
         Waa.setWeight(queryWeight());
 
+        System.out.println("-- Average Ticket (Wat) = ");
+        Wat.setWeight(queryWeight());
+
         Weight.balanceWeight();
 
         if (Weight.getTotal() != 1) {
             Wac.setWeight(oldWac);
             Wcw.setWeight(oldWcw);
             Waa.setWeight(oldWaa);
+            Wat.setWeight(oldWat);
 
             return "ctl: Error: values do not have a sum of 100! Changes reverted!";
         }
@@ -117,7 +127,7 @@ class ctl extends Command {
     }
 
     private static String displaySetting() {
-        return String.format("Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent()).replace("%%", "%");
+        return String.format("Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%\n  Ticket: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent(), Wat.getPercent()).replace("%%", "%");
     }
 }
 
@@ -137,7 +147,15 @@ class tm extends Command {
         for (Team t : Rank.sort()) {
             teamsStr.append(t.toString()).append("\n");
         }
-        teamsStr.append("Rank | Name | Arena | Location | Conference | Capacity | Championships | Avg Attendance");
+        teamsStr.append("""
+                - rank -
+                ____________________
+                name | location
+                arena | conference
+                ac: capacity | cw: championship wins
+                aa: avg attendance | at: avg ticket price
+                
+                """);
         return teamsStr.toString();
     }
 }

@@ -1,6 +1,5 @@
 package main;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +15,9 @@ public class Team {
     private int capacity;
     private int champs;
     private int avgAtt;
+    private int avgTicket;
 
-    public Team(String name, String arena, String location, String conference, int capacity, int champs, int avgAttendance) {
+    public Team(String name, String arena, String location, String conference, int capacity, int champs, int avgAttendance, int avgTicket) {
         this.name = name;
         this.arena = arena;
         this.location = location;
@@ -25,6 +25,7 @@ public class Team {
         this.capacity = capacity;
         this.champs = champs;
         this.avgAtt = avgAttendance;
+        this.avgTicket = avgTicket;
         this.rank = new Rank();
 
         teams.add(this);
@@ -48,6 +49,9 @@ public class Team {
     public int getAvgAtt() {
         return avgAtt;
     }
+    public int getTicket() {
+        return avgTicket;
+    }
 
 
     //setter methods
@@ -60,8 +64,13 @@ public class Team {
 
     //toString method
     public String toString() {
-        DecimalFormat numFormat = new DecimalFormat("#.00");
-
-        return rank.getRankVal()+" | "+name+" | "+arena+" | "+location+" | "+conference+" | "+capacity+" | "+champs+" | "+avgAtt;
+        return String.format("""
+                - %s -
+                ____________________
+                %s | %s
+                %s | %s
+                ac: %s | cw: %s
+                aa: %s | at: $%s
+                """, rank.getRankVal(), name, location, arena, conference, capacity, champs, avgAtt, avgTicket);
     }
 }

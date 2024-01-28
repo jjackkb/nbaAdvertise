@@ -12,9 +12,10 @@ import java.util.Scanner;
 public class Main {
 
     public static final Scanner sc = new Scanner(System.in);
-    public static Weight Wac = new Weight(0.1);
-    public static Weight Wcw = new Weight(0.4);
-    public static Weight Waa = new Weight(0.5);
+    public static Weight Wac = new Weight(0.05);
+    public static Weight Wcw = new Weight(0.20);
+    public static Weight Waa = new Weight(0.25);
+    public static Weight Wat = new Weight(0.30);
 
     public static void main(String[] args) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
@@ -31,14 +32,17 @@ public class Main {
             long capacity = (Long) team.get("capacity"); //to get int from json it has to be the long datatype
             long champs = (Long) team.get("championships");
             long avg = (Long) team.get("avgAttendance");
+            long ticket = (Long) team.get("ticket");
 
-            new Team(name, arena, location, conference, (int)capacity, (int)champs, (int)avg);
+            new Team(name, arena, location, conference, (int)capacity, (int)champs, (int)avg, (int)ticket);
         }
 
         //input/output repeats forever
         //noinspection InfiniteLoopStatement
         while (true) {
             System.out.println(Command.process());
+
+            System.out.println("\n\n");
         }
     }
 
