@@ -1,9 +1,41 @@
 package main;
 
+import java.util.ArrayList;
+
 import static main.Main.inputPrompt;
 import static main.Main.sc;
 
 public class Command {
+
+    private static final ArrayList<Command> cmdList = new ArrayList<>();
+    private String cmdClass;
+    private String className;
+    private String disc;
+    private String usage;
+
+    public Command() {}
+
+    public Command(String cmdClass, String className, String disc, String usage) {
+        this.cmdClass = cmdClass;
+        this.className = className;
+        this.disc = disc;
+        this.usage = usage;
+
+        cmdList.add(this);
+    }
+
+    public String getCmdClass() {
+        return cmdClass;
+    }
+    public String getClassName() {
+        return className;
+    }
+    public String getDisc() {
+        return disc;
+    }
+    public String getUsage() {
+        return usage;
+    }
 
     public static String process() {
         int y = 0;
@@ -24,16 +56,35 @@ public class Command {
         }
         
         output = switch(args[0]) {
-            case "ctl" -> ctl.ctlProcess(args[1], args[2], args[3]);
+            case "wt" -> wt.ctlProcess(args[1], args[2], args[3]);
             case "tm" -> tm.teamProcess(args[1], args[2], args[3]);
+            case "help", "h" -> help();
             default -> "Invalid command!";
         };
         return output;
     }
+
+    private static String help() {
+        StringBuilder help = new StringBuilder();
+        String cmdClassName = "";
+
+        for (Command c : cmdList) {
+            if (!c.getCmdClass().equals(cmdClassName) && cmdClassName.isEmpty()) {
+                help.append(" --- Command Help --- \n* ").append(c.getCmdClass()).append(" (").append(c.getClassName()).append(")\n");
+                cmdClassName = c.getCmdClass();
+            } else if (!c.getCmdClass().equals(cmdClassName)) {
+                help.append("\n* ").append(c.getCmdClass()).append(" (").append(c.getClassName()).append(")\n");
+                cmdClassName = c.getCmdClass();
+            }
+
+            help.append("    ").append(c.getUsage()).append("\n        -").append(c.getDisc()).append("\n");
+        }
+        return help.toString();
+    }
 }
 
 
-class ctl extends Command {
+class wt extends Command {
 
     private static final Weight Wac = Main.Wac;
     private static final Weight Wcw = Main.Wcw;
@@ -42,12 +93,10 @@ class ctl extends Command {
 
     protected static String ctlProcess(String cmd, String arg1, String arg2) {
         return switch(cmd) {
-            case "set" -> switch(arg1) {
-                case "", "a", "all" -> setAll();
-                default -> set(arg1, arg2);
-            };
+            case "set" -> set(arg1, arg2);
+            case "setall" -> setAll();
             case "", "settings" -> displaySetting();
-            default -> "ctl: Error: Unexpected argument " + cmd;
+            default -> "wt: Error: Unexpected argument " + cmd;
         };
     }
 
@@ -61,7 +110,7 @@ class ctl extends Command {
                 Wcw.setWeight(0.2);
                 Waa.setWeight(0.25);
                 Wat.setWeight(0.3);
-                return "ctl: Settings reverted to default";
+                return "wt: Settings reverted to default";
             }
 
             switch (setting.toLowerCase()) {
@@ -78,10 +127,10 @@ class ctl extends Command {
                     Wat.setWeight(Double.parseDouble(strVal)/100);
                     break;
                 default:
-                    return "ctl: Error: Setting " + setting + " not found!";
+                    return "wt: Error: Setting " + setting + " not found!";
             }
         }
-        catch(Exception e) { return "ctl: Error: while attempting to change setting!"; }
+        catch(Exception e) { return "wt: Error: while attempting to change setting!"; }
         return String.format("New Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%\n  Ticket: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent(), Wat.getPercent()).replace("%%", "%");
     }
 
@@ -91,7 +140,7 @@ class ctl extends Command {
         double oldWaa = Waa.getWeight();
         double oldWat = Wat.getWeight();
 
-        System.out.println("Algorithm Weight Percentage Setter\nAll values must have a sum of 100\nLeave blank to skip specification");
+        System.out.println("Algorithm Weight Percentage Setter\nAll values must have a sum of 100%\nLeave blank to skip specification");
 
         System.out.print("-- Capacity (Wac) = ");
         Wac.setWeight(queryWeight());
@@ -113,10 +162,14 @@ class ctl extends Command {
             Waa.setWeight(oldWaa);
             Wat.setWeight(oldWat);
 
-            return "ctl: Error: values do not have a sum of 100! Changes reverted!";
+            return "wt: Error: values do not have a sum of 100%! Changes reverted!";
         }
 
-        return "ctl: Settings saved";
+        return "wt: Settings saved";
+    }
+
+    private static String displaySetting() {
+        return String.format("Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%\n  Ticket: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent(), Wat.getPercent()).replace("%%", "%");
     }
 
     private static Double queryWeight() {
@@ -125,10 +178,6 @@ class ctl extends Command {
         s = (s.isEmpty()) ? "-1" : s;
         return Double.parseDouble(s)/100;
     }
-
-    private static String displaySetting() {
-        return String.format("Algorithm Weight Settings\n  Capacity: %s%%\n  Championship: %s%%\n  Attendance: %s%%\n  Ticket: %s%%", Wac.getPercent(), Wcw.getPercent(), Waa.getPercent(), Wat.getPercent()).replace("%%", "%");
-    }
 }
 
 
@@ -136,17 +185,27 @@ class tm extends Command {
 
     protected static String teamProcess(String cmd, String arg1, String arg2) {
         return switch(cmd) {
-            case "", "list" -> teamListDisplay();
+            case "", "list" -> teamListDisplay(arg1);
             default -> "tm: Error: unexpected argument " + cmd;
         };
     }
 
-    protected static String teamListDisplay() {
+    protected static String teamListDisplay(String arg) {
         StringBuilder teamsStr = new StringBuilder();
+        int maxTeam;
+
+        if (arg.isEmpty()) {
+            maxTeam = 30;
+        } else {
+            try { maxTeam = Integer.parseInt(arg); }
+            catch (Exception e) { return "tm: Error: invalid team limit! " + arg; }
+        }
 
         for (Team t : Rank.sort()) {
-            teamsStr.append(t.toString()).append("\n");
+            if (t.getRank() <= maxTeam)
+                teamsStr.append(t).append("\n");
         }
+
         teamsStr.append("""
                 - rank -
                 ____________________

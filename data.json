@@ -29,4 +29,4 @@
   {"name":"Grizzlies", "arena":"FedEx Forum", "location":"Memphis","conference":"West","capacity":18119,"championships":0,"avgAttendance":16778,"ticket":226},
   {"name":"Pelicans", "arena":"Smoothie King Center", "location":"New Orleans","conference":"West","capacity":16867,"championships":0,"avgAttendance":16926,"ticket":179},
   {"name":"Spurs", "arena":"AT&T Center", "location":"San Antonio","conference":"West","capacity":18418,"championships":5,"avgAttendance": 18315,"ticket":157}
-  ]
+]

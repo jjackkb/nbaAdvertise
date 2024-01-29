@@ -32,11 +32,13 @@ public class Rank extends Team {
             FS = Wac * ac + Wcw * cw + Waa * aa + Wat * at
 
             where:
-            FS: final score for team
-            AC: arena capacity for team
-            CW: championship wins for team
-            AA: average attendance for team
-            wAC, wCW, and wAA are the weights assigned respectively
+            fs: final score for team
+            ac: arena capacity for team
+            cw: championship wins for team
+            aa: average attendance for team
+            at: average ticket price for team
+            Wac, Wcw, Waa, Wat are the weights assigned respectively
+
              */
 
             t.setScore((Wac.getWeight() * ac) + (Wcw.getWeight() * cw) + (Waa.getWeight() * aa) + (Wat.getWeight() * at));

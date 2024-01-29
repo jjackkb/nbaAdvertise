@@ -12,6 +12,7 @@ import java.util.Scanner;
 public class Main {
 
     public static final Scanner sc = new Scanner(System.in);
+
     public static Weight Wac = new Weight(0.05);
     public static Weight Wcw = new Weight(0.20);
     public static Weight Waa = new Weight(0.25);
@@ -20,6 +21,12 @@ public class Main {
     public static void main(String[] args) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
+
+        new Command("wt", "weight", "set weight for a component of the algorithm", "set <component> <new value>");
+        new Command("wt", "weight", "set weight for every component of the algorithm", "setall");
+        new Command("wt", "weight", "displays current weight settings", "settings");
+
+        new Command("tm","team", "Display list of NBA teams (leave <number of teams> blank to display all)", "list <number of teams>");
 
         //Instantiate every main.Team object with given data
         for (Object o : a) {

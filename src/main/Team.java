@@ -40,6 +40,9 @@ public class Team {
     public double getScore() {
         return rank.getScore();
     }
+    public int getRank() {
+        return rank.getRankVal();
+    }
     public int getCapacity() {
         return capacity;
     }
@@ -52,7 +55,6 @@ public class Team {
     public int getTicket() {
         return avgTicket;
     }
-
 
     //setter methods
     public void setScore(double s) {
