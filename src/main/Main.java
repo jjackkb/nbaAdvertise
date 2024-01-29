@@ -54,7 +54,7 @@ public class Main {
     }
 
     public static String inputPrompt() {
-        System.out.print("~ ");
+        System.out.print("(type 'help' for commands) ~ ");
         return sc.nextLine();
     }
 }
