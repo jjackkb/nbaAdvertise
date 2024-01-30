@@ -59,9 +59,26 @@ public class Command {
             case "wt" -> wt.ctlProcess(args[1], args[2], args[3]);
             case "tm" -> tm.teamProcess(args[1], args[2], args[3]);
             case "help", "h" -> help();
+            case "alg"-> getAlg();
             default -> "Invalid command!";
         };
         return output;
+    }
+
+    private static String getAlg() {
+        return """
+            fs = (Wac * ac) + (Wcw * cw) + (Waa * aa) + (Wat * at)
+
+            where:
+            fs: final score for team
+            ac: arena capacity
+            cw: championship wins
+            aa: average attendance
+            at: average ticket price
+            Wac, Wcw, Waa, Wat are the weights assigned, respectively
+            
+            **Each team-specific variable is normalized before calculating rank**
+                """;
     }
 
     private static String help() {

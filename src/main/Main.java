@@ -28,6 +28,8 @@ public class Main {
 
         new Command("tm","team", "Display list of NBA teams (leave <number of teams> blank to display all)", "list <number of teams>");
 
+        new Command("alg", "Algorithm", "Displays algorithm the program uses", "alg");
+
         //Instantiate every main.Team object with given data
         for (Object o : a) {
             JSONObject team = (JSONObject) o;
@@ -45,16 +47,25 @@ public class Main {
         }
 
         //input/output repeats forever
+        System.out.println("""
+        _                       _                _   _          
+       | |             /\\      | |              | | (_)         
+  _ __ | |__   __ _   /  \\   __| |_   _____ _ __| |_ _ ___  ___ 
+ | '_ \\| '_ \\ / _` | / /\\ \\ / _` \\ \\ / / _ \\ '__| __| / __|/ _ \\
+ | | | | |_) | (_| |/ ____ \\ (_| |\\ V /  __/ |  | |_| \\__ \\  __/
+ |_| |_|_.__/ \\__,_/_/    \\_\\__,_| \\_/ \\___|_|   \\__|_|___/\\___|
+                                                                
+""");
+        System.out.println("Welcome to nbaAdvertise!\nThis program uses NBA team and arena data to determine the best arenas to put your ad in!\nIf you are lost, start with the 'help' command.\nCreated by Jack and Cam");
         //noinspection InfiniteLoopStatement
         while (true) {
             System.out.println(Command.process());
-
             System.out.println("\n\n");
         }
     }
 
     public static String inputPrompt() {
-        System.out.print("(type 'help' for commands) ~ ");
+        System.out.print("~ ");
         return sc.nextLine();
     }
 }
