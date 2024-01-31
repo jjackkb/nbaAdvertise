@@ -87,7 +87,7 @@ public class Command {
 
         for (Command c : cmdList) {
             if (!c.getCmdClass().equals(cmdClassName) && cmdClassName.isEmpty()) {
-                help.append(" --- Command Help --- \n* ").append(c.getCmdClass()).append(" (").append(c.getClassName()).append(")\n (correct syntax: 'wt set <component> <value in whole percentage>' or 'wt setall <value in whole percentage>')");
+                help.append(" --- Command Help --- \n* ").append(c.getCmdClass()).append(" (").append(c.getClassName()).append(")\n");
                 cmdClassName = c.getCmdClass();
             } else if (!c.getCmdClass().equals(cmdClassName)) {
                 help.append("\n* ").append(c.getCmdClass()).append(" (").append(c.getClassName()).append(")\n");

@@ -22,7 +22,7 @@ public class Main {
         JSONParser parser = new JSONParser();
         JSONArray a = (JSONArray) parser.parse(new FileReader(System.getProperty("user.dir") + "/data.json"));
 
-        new Command("wt", "weight", "set weight for a component of the algorithm", "set <component> <new value>");
+        new Command("wt", "weight )\n(correct syntax: 'wt set <component> <value in whole percentage>' or 'wt setall')", "set weight for a component of the algorithm", "set <component> <new value in whole percentage>");
         new Command("wt", "weight", "set weight for every component of the algorithm", "setall");
         new Command("wt", "weight", "displays current weight settings", "settings");
 
