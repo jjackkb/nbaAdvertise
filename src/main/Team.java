@@ -17,6 +17,7 @@ public class Team {
     private int avgAtt;
     private int avgTicket;
 
+    //main constructor
     public Team(String name, String arena, String location, String conference, int capacity, int champs, int avgAttendance, int avgTicket) {
         this.name = name;
         this.arena = arena;
@@ -31,6 +32,7 @@ public class Team {
         teams.add(this);
     }
 
+    //alt constructor
     public Team() {}
 
     //getter methods
